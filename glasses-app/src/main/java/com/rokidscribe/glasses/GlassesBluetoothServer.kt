@@ -217,7 +217,8 @@ class GlassesBluetoothServer(
                 message = "Bluetooth import complete.",
             ),
         )
-        repository.markImported(recordings.map { it.id })
+        repository.deleteRecordings(recordings.map { it.id })
+        postStatus("Imported ${recordings.size} recording(s) to the phone and removed local copies.")
     }
 
     private suspend fun handleWifiTransfer(
@@ -248,8 +249,8 @@ class GlassesBluetoothServer(
                 message = "Wi-Fi import complete.",
             ),
         )
-        repository.markImported(recordings.map { it.id })
-        postStatus("Sent ${recordings.size} recording(s) over Wi-Fi.")
+        repository.deleteRecordings(recordings.map { it.id })
+        postStatus("Imported ${recordings.size} recording(s) to the phone and removed local copies.")
     }
 
     private fun ByteArray.toHexString(): String = joinToString(separator = "") { byte ->

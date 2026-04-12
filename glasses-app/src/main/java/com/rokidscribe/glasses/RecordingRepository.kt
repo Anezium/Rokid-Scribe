@@ -187,6 +187,19 @@ class RecordingRepository(
             .apply()
     }
 
+    fun deleteRecordings(itemIds: List<String>) {
+        if (itemIds.isEmpty()) {
+            return
+        }
+
+        itemIds.forEach { id ->
+            val descriptor = readDescriptor(metadataFileFor(id))
+            val audioFile = descriptor?.let(::audioFileFor) ?: audioFileFor(id)
+            cleanupArtifacts(id, audioFile, draftFileFor(id))
+            clearImportedMark(id)
+        }
+    }
+
     private fun clearImportedMark(id: String) {
         val updated = importedIds().toMutableSet()
         updated.remove(id)

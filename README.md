@@ -54,6 +54,7 @@ Recent work turned this into a much more complete companion workflow instead of 
 - The glasses app records crash-tolerant local `AAC / ADTS` notes and recovers interrupted captures on next launch.
 - The phone app imports pending notes over two explicit local transports: `Wi-Fi LAN / FAST` and `Bluetooth SPP`.
 - Import is phone-initiated, with the hotspot flow as the preferred real-world path when you are outside.
+- Successfully imported notes are automatically removed from the glasses after transfer completes.
 - Notes are stored locally on the phone with metadata and transcript sidecars.
 - The phone app supports multiple transcription providers: `ElevenLabs`, `AssemblyAI`, `Speechmatics`, `Deepgram`, and `Groq`.
 - Multi-speaker transcript support is enabled wherever the provider exposes usable diarization output.
@@ -99,6 +100,7 @@ It uses direct Bluetooth for both control and payload transfer. It is slower, bu
 - Phone-initiated pending queue probe
 - Local import over `Wi-Fi LAN / FAST`
 - Local import over `Bluetooth SPP`
+- Auto-delete of glasses-side recordings after successful import
 - Per-note local storage on the phone
 - Per-note provider-aware transcripts
 - Multi-speaker transcript rendering and badges when available
