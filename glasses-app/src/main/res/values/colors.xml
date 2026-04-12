@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="hud_bg">#000000</color>
+    <color name="hud_primary">#00FF00</color>
+    <color name="hud_dim">#008800</color>
+    <color name="hud_ghost">#003300</color>
+    <color name="hud_text_bright">#CCFFCC</color>
+    <color name="hud_text_mid">#00CC00</color>
+    <color name="hud_log">#008800</color>
+    <color name="hud_progress_track">#001A00</color>
+    <color name="hud_action_fill">#008800</color>
+</resources>

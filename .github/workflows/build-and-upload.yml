@@ -1,0 +1,53 @@
+name: Rokid-Scribe Debug Builds
+
+on:
+  push:
+    branches:
+      - main
+      - "release/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-debug-apks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set current date as env variable
+        run: echo "date_today=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+
+      - name: Set repository name as env variable
+        run: echo "repository_name=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')" >> $GITHUB_ENV
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: zulu
+          java-version: "17"
+          cache: gradle
+
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
+
+      - name: Run gradle tests
+        run: ./gradlew test
+
+      - name: Build phone and glasses debug APKs
+        run: ./gradlew :app:assembleDebug :glasses-app:assembleDebug
+
+      - name: Upload phone APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.date_today }} - Rokid-Scribe - ${{ env.repository_name }} - phone-debug-apk
+          path: app/build/outputs/apk/debug/app-debug.apk
+
+      - name: Upload glasses APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.date_today }} - Rokid-Scribe - ${{ env.repository_name }} - glasses-debug-apk
+          path: glasses-app/build/outputs/apk/debug/glasses-app-debug.apk

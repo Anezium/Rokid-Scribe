@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hud_bg"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingHorizontal="32dp"
+    android:paddingTop="24dp"
+    android:paddingBottom="18dp">
+
+    <LinearLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/hudTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:includeFontPadding="false"
+            android:letterSpacing="0.18"
+            android:text="@string/app_name_short"
+            android:textAllCaps="true"
+            android:textColor="@color/hud_dim"
+            android:textSize="10sp" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:id="@+id/recordBadge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/visualizerContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="14dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <View
+                    android:id="@+id/visBar1"
+                    android:layout_width="3dp"
+                    android:layout_height="4dp"
+                    android:background="@drawable/bg_visualizer_bar" />
+
+                <View
+                    android:id="@+id/visBar2"
+                    android:layout_width="3dp"
+                    android:layout_height="4dp"
+                    android:layout_marginStart="3dp"
+                    android:background="@drawable/bg_visualizer_bar" />
+
+                <View
+                    android:id="@+id/visBar3"
+                    android:layout_width="3dp"
+                    android:layout_height="4dp"
+                    android:layout_marginStart="3dp"
+                    android:background="@drawable/bg_visualizer_bar" />
+
+                <View
+                    android:id="@+id/visBar4"
+                    android:layout_width="3dp"
+                    android:layout_height="4dp"
+                    android:layout_marginStart="3dp"
+                    android:background="@drawable/bg_visualizer_bar" />
+
+                <View
+                    android:id="@+id/visBar5"
+                    android:layout_width="3dp"
+                    android:layout_height="4dp"
+                    android:layout_marginStart="3dp"
+                    android:background="@drawable/bg_visualizer_bar" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/recordDot"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:background="@drawable/bg_record_dot" />
+
+            <TextView
+                android:id="@+id/recordTimeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="monospace"
+                android:includeFontPadding="false"
+                android:text="00:00"
+                android:textColor="@color/hud_primary"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/hudCenter"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/centerStatusText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="@string/summary_no_pending"
+            android:textAllCaps="true"
+            android:textColor="@color/hud_primary"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/centerSubText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:letterSpacing="0.05"
+            android:maxLines="2"
+            android:text="@string/summary_ready_to_capture"
+            android:textColor="@color/hud_text_mid"
+            android:textSize="11sp" />
+
+        <RelativeLayout
+            android:id="@+id/actionContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp">
+
+            <TextView
+                android:id="@+id/wifiActionButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@drawable/bg_hud_action"
+                android:clickable="false"
+                android:focusable="false"
+                android:fontFamily="monospace"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:minWidth="0dp"
+                android:paddingHorizontal="24dp"
+                android:paddingVertical="10dp"
+                android:text="@string/action_open_wifi"
+                android:textAllCaps="true"
+                android:textColor="@color/text_hud_action"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/progressText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:textColor="@color/hud_primary"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <ProgressBar
+            android:id="@+id/transferProgress"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="220dp"
+            android:layout_height="3dp"
+            android:layout_marginTop="8dp"
+            android:max="100"
+            android:progress="0"
+            android:progressDrawable="@drawable/progress_hud"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/hudBottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/dividerView"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/hud_ghost" />
+
+        <TextView
+            android:id="@+id/hintText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:letterSpacing="0.05"
+            android:text="@string/hint_tap_record"
+            android:textColor="@color/hud_text_mid"
+            android:textSize="10sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/logText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="@string/log_waiting"
+            android:textColor="@color/hud_dim"
+            android:textSize="8sp" />
+    </LinearLayout>
+
+</LinearLayout>

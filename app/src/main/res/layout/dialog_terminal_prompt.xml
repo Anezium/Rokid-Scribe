@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_player_card"
+    android:padding="24dp">
+
+    <TextView
+        android:id="@+id/dialogTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/phosphor_error"
+        android:textSize="14sp"
+        android:fontFamily="monospace"
+        android:textStyle="bold"
+        android:text="> SYS.WARN: DELETE_FILE"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:id="@+id/dialogMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/phosphor_text_mid"
+        android:textSize="12sp"
+        android:fontFamily="monospace"
+        android:text="Are you sure you want to permanently erase this recording? This action cannot be undone."
+        android:lineSpacingExtra="4dp"
+        android:layout_marginBottom="32dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end">
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="[ ABORT ]"
+            android:textColor="@color/phosphor_dim"
+            android:textSize="10sp"
+            android:fontFamily="monospace"
+            android:background="@android:color/transparent"
+            android:stateListAnimator="@null"
+            android:textAllCaps="false"
+            android:minWidth="0dp"
+            android:minHeight="0dp" />
+
+        <Space
+            android:layout_width="16dp"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btnConfirm"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="[ EXECUTE ]"
+            android:textColor="@color/phosphor_error"
+            android:textSize="10sp"
+            android:fontFamily="monospace"
+            android:background="@drawable/btn_outline_green"
+            android:backgroundTint="@color/phosphor_error"
+            android:stateListAnimator="@null"
+            android:textAllCaps="false"
+            android:minWidth="0dp"
+            android:minHeight="0dp" />
+    </LinearLayout>
+</LinearLayout>

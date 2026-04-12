@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rokid-Scribe Interactive Mockup</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050a05;
+            --primary: #39ff14;
+            --mid: #22c20a;
+            --dim: #1a8a1a;
+            --card-bg: #0a150a;
+            --text-bright: #d4ffd4;
+            --text-mid: #4e8a4e;
+            --text-ghost: #1c351c;
+            --divider: #112211;
+            --stroke: #253525;
+            --badge-bg: #0d230d;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--primary);
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+        }
+        
+        .mono { font-family: 'JetBrains Mono', monospace; }
+
+        .phone {
+            width: 380px;
+            height: 800px;
+            background: linear-gradient(180deg, var(--bg) 0%, #020402 100%);
+            border: 1px solid var(--stroke);
+            border-radius: 40px;
+            padding: 44px 24px 24px 24px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 50px rgba(57, 255, 20, 0.05);
+        }
+
+        .phone::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+            z-index: 100;
+            background-size: 100% 4px;
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        /* Views management */
+        .screen {
+            display: none;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+            z-index: 2;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .screen.active { display: flex; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Generic shared UI */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 24px;
+        }
+        
+        .header-title-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .dot-pulse {
+            width: 8px; height: 8px;
+            background-color: var(--primary);
+            box-shadow: 0 0 10px var(--primary);
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink { 
+            0%, 100% { opacity: 1; box-shadow: 0 0 12px var(--primary); } 
+            50% { opacity: 0.3; box-shadow: 0 0 2px var(--primary); } 
+        }
+
+        .header-title {
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--primary);
+            text-transform: uppercase;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--stroke);
+            color: var(--dim);
+            padding: 8px 12px;
+            font-size: 10px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+        .btn-outline:hover { 
+            border-color: var(--primary); 
+            color: var(--primary); 
+        }
+        
+        .btn-outline.danger {
+            color: #ff3333;
+            border-color: #551111;
+        }
+        
+        .section-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .section-label-text {
+            font-size: 10px;
+            color: var(--dim);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .divider {
+            flex-grow: 1;
+            height: 1px;
+            background-color: var(--divider);
+        }
+
+        /* Component: Mini-Log (Home Screen) */
+        .import-box {
+            margin-bottom: 24px;
+        }
+        
+        .btn-primary {
+            width: 100%;
+            background-color: var(--primary);
+            color: #000;
+            border: none;
+            padding: 16px;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 4px;
+            box-shadow: 0 0 15px var(--dim);
+            transition: all 0.2s;
+        }
+        .btn-primary:active { transform: translateY(2px); }
+
+        .progress-box {
+            display: none;
+            background-color: var(--card-bg);
+            border: 1px solid var(--stroke);
+            padding: 16px;
+            margin-top: 12px;
+            border-radius: 8px;
+        }
+        .progress-box.active { display: block; }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            font-size: 9px;
+            color: var(--text-ghost);
+            margin-bottom: 12px;
+        }
+        .step.active { color: var(--primary); font-weight: bold; }
+        .step.done { color: var(--text-mid); }
+
+        .mini-log {
+            font-size: 10px;
+            color: var(--text-mid);
+            line-height: 1.6;
+            height: 48px;
+            overflow: hidden;
+            border-top: 1px dashed var(--stroke);
+            padding-top: 8px;
+        }
+
+        /* Component: Notes List */
+        .notes-list {
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .note-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--stroke);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .note-card:hover {
+            border-color: rgba(57, 255, 20, 0.4);
+            background-color: #0b1a0b;
+        }
+        
+        .note-card::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0; width: 4px;
+            background-color: var(--stroke);
+            transition: background-color 0.2s;
+        }
+        .note-card:hover::before { background-color: var(--primary); }
+
+        .note-top, .note-bottom {
+            display: flex;
+            justify-content: space-between;
+        }
+        .note-title { color: var(--text-bright); font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+        .note-duration { color: var(--primary); font-size: 12px; }
+        .note-date { color: var(--text-mid); font-size: 11px; }
+
+        .badge {
+            background-color: var(--badge-bg);
+            border: 1px solid var(--stroke);
+            color: var(--text-mid);
+            font-size: 9px;
+            padding: 4px 8px;
+            letter-spacing: 1px;
+            border-radius: 4px;
+        }
+        .badge.active { color: var(--primary); border-color: var(--dim); background-color: rgba(57, 255, 20, 0.05); }
+
+        /* Detail player */
+        .player-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--stroke);
+            border-radius: 12px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        
+        .btn-play {
+            width: 56px; height: 56px;
+            border-radius: 50%;
+            background-color: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            position: relative;
+        }
+        /* A play triangle */
+        .btn-play::after {
+            content: '';
+            border-style: solid;
+            border-width: 8px 0 8px 12px;
+            border-color: transparent transparent transparent var(--primary);
+            margin-left: 4px;
+        }
+
+        .player-bar {
+            width: 100%;
+            height: 4px;
+            background-color: var(--stroke);
+            margin-top: 24px;
+            border-radius: 2px;
+            position: relative;
+        }
+        .player-progress {
+            width: 0%;
+            height: 100%;
+            background-color: var(--primary);
+            border-radius: 2px;
+            box-shadow: 0 0 10px var(--primary);
+        }
+        
+        .player-times {
+            width: 100%;
+            display: flex; justify-content: space-between;
+            margin-top: 8px;
+            font-size: 11px; color: var(--text-mid);
+        }
+
+        /* Detail transcript */
+        .transcript-text {
+            color: var(--text-bright);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 24px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .action-bar {
+            display: flex;
+            gap: 12px;
+            margin-top: auto;
+        }
+        .action-bar .btn-outline { flex: 1; display: flex; justify-content: center; padding: 12px; }
+
+        /* Settings fields */
+        .settings-form { flex-grow: 1; }
+        .form-group {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 16px;
+            border: 1px solid var(--stroke);
+            margin-bottom: 16px;
+        }
+        .form-label {
+            font-size: 10px;
+            color: var(--dim);
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            display: inline-block;
+            background: var(--badge-bg);
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+        .form-input {
+            width: 100%;
+            background-color: #030603;
+            border: 1px solid var(--stroke);
+            color: var(--text-bright);
+            padding: 12px;
+            font-size: 14px;
+            border-radius: 4px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .form-input:focus { border-color: var(--primary); }
+        .form-hint { font-size: 11px; color: var(--text-mid); margin-top: 8px; line-height: 1.4; }
+
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--stroke); border-radius: 4px; }
+
+    </style>
+</head>
+<body>
+
+    <div class="phone">
+
+        <!-- =================== SCREEN: HOME =================== -->
+        <div id="screen-home" class="screen active">
+            <div class="header">
+                <div class="header-title-container mono">
+                    <div class="dot-pulse"></div>
+                    <div class="header-title">ROKID SCRIBE</div>
+                </div>
+                <button class="btn-outline mono" onclick="nav('screen-settings')">[ SETTINGS ]</button>
+            </div>
+            
+            <div class="device-status mono">> <span>GLASSES CONNECTED (LAN)</span></div>
+
+            <div class="import-box">
+                <button id="btn-import-sync" class="btn-primary mono" onclick="startImport()">IMPORT FROM GLASSES</button>
+                
+                <!-- The Mini-Log Progress Indicator that replaced the Terminal -->
+                <div id="import-progress" class="progress-box mono">
+                    <div class="progress-steps" id="progress-steps">
+                        <span class="step">[ ] PAIR</span>
+                        <span class="step">[ ] QUEUE</span>
+                        <span class="step">[ ] LAN</span>
+                        <span class="step">[ ] SAVE</span>
+                        <span class="step">[ ] OK</span>
+                    </div>
+                    <div class="mini-log" id="mini-log">
+                        > Ready to import.<br>
+                        > ...<br>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-label">
+                <div class="section-label-text mono">LOCAL NOTES</div>
+                <div class="divider"></div>
+            </div>
+
+            <div class="notes-list">
+                <div class="note-card" onclick="nav('screen-detail-transcribed')">
+                    <div class="note-top">
+                        <div class="note-title">Réunion Planning Q3</div>
+                        <div class="note-duration mono">06:42</div>
+                    </div>
+                    <div class="note-bottom">
+                        <div class="note-date mono">Auj. 10:30</div>
+                        <div class="badge active mono">TRANSCRIBED</div>
+                    </div>
+                </div>
+
+                <div class="note-card" onclick="nav('screen-detail-pending')">
+                    <div class="note-top">
+                        <div class="note-title">Idée Architecture Cloud</div>
+                        <div class="note-duration mono">01:15</div>
+                    </div>
+                    <div class="note-bottom">
+                        <div class="note-date mono">Hier 18:20</div>
+                        <div class="badge mono">PENDING</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="header" style="padding: 16px 0 0 0; margin-top:auto; font-size: 10px; color: var(--text-ghost);">
+                <div class="mono"><span style="color:var(--primary);font-weight:bold;">READY</span> · BT: ON</div>
+                <div class="mono">v1.1.0</div>
+            </div>
+        </div>
+
+
+        <!-- =================== SCREEN: DETAIL (PENDING) =================== -->
+        <div id="screen-detail-pending" class="screen">
+            <div class="header">
+                <button class="btn-outline mono" onclick="nav('screen-home')">&lt; BACK</button>
+                <button class="btn-outline danger mono">[ DEL ]</button>
+            </div>
+            
+            <div style="margin-bottom: 24px;">
+                <h2 style="color: var(--text-bright); font-size: 18px; margin-bottom: 4px;">Idée Architecture Cloud</h2>
+                <div class="mono" style="font-size: 11px; color: var(--text-mid);">Id: 20260410_182015.m4a · 1.2MB</div>
+            </div>
+
+            <div class="player-card">
+                <button class="btn-play"></button>
+                <div class="player-bar"><div class="player-progress"></div></div>
+                <div class="player-times mono">
+                    <span>00:00</span><span>01:15</span>
+                </div>
+            </div>
+
+            <div class="section-label">
+                <div class="section-label-text mono">TRANSCRIPT</div>
+                <div class="divider"></div>
+            </div>
+            
+            <div style="flex-grow: 1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+                <div class="mono" style="color:var(--text-ghost); font-size: 12px; margin-bottom: 24px; text-align:center;">
+                    No transcript available yet.
+                </div>
+                <button class="btn-primary mono" style="background:#1a331a; color:var(--primary); border: 1px solid var(--primary); width:80%;">
+                    START TRANSCRIBE (API)
+                </button>
+            </div>
+        </div>
+
+
+        <!-- =================== SCREEN: DETAIL (TRANSCRIBED) =================== -->
+        <div id="screen-detail-transcribed" class="screen">
+            <div class="header">
+                <button class="btn-outline mono" onclick="nav('screen-home')">&lt; BACK</button>
+                <button class="btn-outline danger mono">[ DEL ]</button>
+            </div>
+            
+            <div style="margin-bottom: 16px;">
+                <h2 style="color: var(--text-bright); font-size: 18px; margin-bottom: 4px;">Réunion Planning Q3</h2>
+                <div class="mono" style="font-size: 11px; color: var(--text-mid);">Id: 20260411_103000.m4a · 4.8MB</div>
+            </div>
+
+            <div class="player-card" style="padding: 16px; margin-bottom: 16px;">
+                <div style="display:flex; width:100%; align-items:center; gap:16px;">
+                    <button class="btn-play" style="width:40px; height:40px; border-width: 1px;"></button>
+                    <div style="flex-grow:1;">
+                        <div class="player-bar" style="margin-top:0;"><div class="player-progress" style="width: 35%;"></div></div>
+                        <div class="player-times mono" style="margin-top:4px;"><span>02:14</span><span>06:42</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-label">
+                <div class="section-label-text mono">TRANSCRIPT</div>
+                <div class="divider"></div>
+            </div>
+            
+            <div class="transcript-text mono">
+                [00:00] Bonjour à tous, merci d'être présents pour ce point de milieu de trimestre.<br><br>
+                [00:05] L'objectif principal aujourd'hui est re-valider l'architecture cloud que l'on va déployer en production le mois prochain.<br><br>
+                [00:15] Est-ce que les instances AWS sont provisionnées ?<br><br>
+                [00:20] Oui, tout est prêt, on attend juste la validation du security bot...
+            </div>
+
+            <div class="action-bar">
+                <button class="btn-outline mono">COPY</button>
+                <button class="btn-outline mono">EXP TXT</button>
+                <button class="btn-outline mono">EXP PDF</button>
+            </div>
+        </div>
+
+
+        <!-- =================== SCREEN: SETTINGS =================== -->
+        <div id="screen-settings" class="screen">
+            <div class="header">
+                <button class="btn-outline mono" onclick="nav('screen-home')">&lt; BACK</button>
+                <div class="header-title mono" style="text-shadow: none; font-size: 14px;">SETTINGS</div>
+            </div>
+
+            <div class="settings-form">
+                <div class="form-group">
+                    <span class="form-label mono">ELEVENLABS API KEY</span>
+                    <input type="password" class="form-input mono" value="sk_xxxxxxxxxxxxxxxxxxxx">
+                    <div class="form-hint mono">> Used directly for local transcription. Keys never leave the phone.</div>
+                </div>
+                
+                <div class="form-group">
+                    <span class="form-label mono">TRANSPORT PRIORITY</span>
+                    <select class="form-input mono" style="appearance: none;">
+                        <option>WIFI LAN / FAST</option>
+                        <option>BLUETOOTH SPP</option>
+                    </select>
+                    <div class="form-hint mono">> LAN requires glasses companion app. Will use BT as fallback.</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Interface Logic -->
+    <script>
+        function nav(screenId) {
+            document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        async function startImport() {
+            const btn = document.getElementById('btn-import-sync');
+            const box = document.getElementById('import-progress');
+            const logBox = document.getElementById('mini-log');
+            const steps = document.querySelectorAll('.step');
+            
+            btn.style.display = 'none';
+            box.classList.add('active');
+            
+            const log = (msg) => {
+                logBox.innerHTML = `> ${msg}<br>` + logBox.innerHTML;
+            };
+
+            const delay = ms => new Promise(res => setTimeout(res, ms));
+
+            const updateStep = (index, status) => {
+                steps.forEach(s => { s.classList.remove('active'); });
+                for(let i=0; i<index; i++) steps[i].classList.add('done');
+                if(status === 'active') steps[index].classList.add('active');
+                else if (status === 'done') steps[index].classList.add('done');
+            };
+
+            // PAIR
+            updateStep(0, 'active');
+            log("Init Wi-Fi LAN probing...");
+            await delay(800);
+            
+            // QUEUE
+            updateStep(1, 'active');
+            log("Glasses connected over IP 192.168.1.5.");
+            await delay(600);
+            log("Found 1 pending recording(s).");
+            await delay(800);
+
+            // LAN
+            updateStep(2, 'active');
+            log("Starting transfer: Note_004.m4a (1.2MB)");
+            await delay(500);
+            log("Transfer: 30%");
+            await delay(500);
+            log("Transfer: 100%");
+            await delay(400);
+
+            // SAVE
+            updateStep(3, 'active');
+            log("Saving local metadata sidecar...");
+            await delay(800);
+
+            // OK
+            updateStep(4, 'done');
+            log("<span style='color:var(--text-bright)'>Import successful!</span>");
+            
+            await delay(1500);
+            
+            // Reset UI
+            box.classList.remove('active');
+            btn.style.display = 'block';
+            steps.forEach(s => { s.classList.remove('active'); s.classList.remove('done'); });
+            logBox.innerHTML = "> Ready to import.<br>> ...<br>";
+        }
+    </script>
+</body>
+</html>

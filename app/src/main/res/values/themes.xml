@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.RokidScribe" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@color/phosphor_bg</item>
+        <item name="android:statusBarColor">@color/phosphor_bg</item>
+        <item name="android:navigationBarColor">@color/phosphor_bg</item>
+    </style>
+
+    <!-- Phosphor-themed AlertDialog -->
+    <style name="PhosphorDialog" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/bg_dialog</item>
+        <item name="android:textColor">@color/phosphor_text_bright</item>
+        <item name="android:textColorPrimary">@color/phosphor_text_bright</item>
+        <item name="android:textColorSecondary">@color/phosphor_text_mid</item>
+        <item name="colorAccent">@color/phosphor_primary</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/PhosphorDialogButton</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/PhosphorDialogButton</item>
+        <item name="android:buttonBarNeutralButtonStyle">@style/PhosphorDialogButton</item>
+    </style>
+
+    <style name="PhosphorDialogButton" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/phosphor_primary</item>
+        <item name="android:fontFamily">monospace</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:letterSpacing">0.1</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <!-- For the delete dialog positive (destructive) button -->
+    <style name="PhosphorDialogButtonDanger" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/phosphor_error</item>
+        <item name="android:fontFamily">monospace</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:letterSpacing">0.1</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+</resources>

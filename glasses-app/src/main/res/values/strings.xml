@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">Rokid Scribe</string>
+    <string name="app_name_short">ROKID SCRIBE</string>
+    <string name="status_idle">Ready to capture audio</string>
+    <string name="status_opening_wifi">Opening Wi-Fi settings...</string>
+    <string name="status_wifi_unavailable">Unable to open Wi-Fi settings</string>
+    <string name="no_paired_phone">No pending recordings</string>
+    <string name="action_record">[ RECORD ]</string>
+    <string name="action_stop">[ STOP ]</string>
+    <string name="action_open_wifi">[ OPEN WI-FI ]</string>
+    <string name="hint_swipe_tap">TAP TO RECORD - SWIPE FOR WIFI</string>
+    <string name="hint_tap_connect">TAP TO RECORD</string>
+    <string name="hint_tap_continue">TAP TO STOP</string>
+    <string name="hint_no_device">TAP TO RECORD</string>
+    <string name="hint_swipe_connect_with_wifi">TAP TO RECORD</string>
+    <string name="hint_connect_with_wifi">TAP TO RECORD</string>
+    <string name="hint_no_device_with_wifi">TAP TO RECORD - SWIPE FOR WIFI</string>
+    <string name="hint_wifi_action">TAP OPEN WI-FI</string>
+    <string name="log_opening_wifi">Opening Wi-Fi settings</string>
+    <string name="log_waiting">Waiting...</string>
+    <string name="status_permissions_missing">Microphone and Bluetooth permissions are required.</string>
+    <string name="status_listening_phone">Bluetooth server ready for phone-initiated import.</string>
+    <string name="status_recording">Recording... tap to stop.</string>
+    <string name="status_saved_recording">Recording saved.</string>
+    <string name="status_record_failed">Recording failed.</string>
+    <string name="status_no_recordings">No pending note yet.</string>
+    <string name="title_recording">RECORDING</string>
+    <string name="hint_tap_record">TAP TO RECORD - SWIPE FOR WIFI</string>
+    <string name="hint_tap_stop">TAP TO STOP</string>
+    <string name="hint_open_wifi">TAP OPEN WI-FI - SWIPE FOR RECORD</string>
+    <string name="log_recording_started">Recording started.</string>
+    <string name="summary_no_pending">NO PENDING RECORDINGS</string>
+    <string name="summary_ready_to_capture">Ready to capture audio</string>
+    <string name="summary_waiting_import">Waiting for phone import...</string>
+    <string name="summary_importing_phone">Importing to phone...</string>
+    <plurals name="title_pending_count">
+        <item quantity="one">1 NOTE</item>
+        <item quantity="other">%d NOTES</item>
+    </plurals>
+</resources>

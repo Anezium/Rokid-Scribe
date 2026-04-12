@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rokid-Scribe Glasses UI Mockup (Recorder)</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Black is perfectly transparent in AR optics */
+            --bg-color: #000000;
+            --hud-primary: #00ff00;
+            /* pure green */
+            --hud-dim: #008800;
+            /* darker green */
+            --hud-ghost: #003300;
+            /* very dark green/border */
+            --hud-text-bright: #ccffcc;
+            /* readable almost white-green */
+            --hud-text-mid: #00cc00;
+            --hud-transition: all 0.4s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        body {
+            background-color: #111;
+            /* Simulate dark environment outside glasses */
+            background-image: radial-gradient(circle at center, #222 0%, #000 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* The AR Viewport - simulating what the user sees */
+        .ar-viewport {
+            width: 800px;
+            height: 450px;
+            /* 16:9 aspect ratio HUD */
+            background-color: var(--bg-color);
+            /* pure black = transparent */
+            border: 2px solid #333;
+            border-radius: 16px;
+            padding: 32px 48px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 80px rgba(0, 0, 0, 0.9);
+        }
+
+        /* Optional scanlines for aesthetic context */
+        .ar-viewport::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(rgba(0, 255, 0, 0.05) 1px, transparent 1px);
+            background-size: 100% 4px;
+            pointer-events: none;
+            opacity: 0.3;
+            z-index: 10;
+        }
+
+        /* Top Bar */
+        .hud-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--hud-transition);
+        }
+
+        .hud-title {
+            color: var(--hud-dim);
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Recording Indicator (Top Right) */
+        .record-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            opacity: 0;
+            transition: var(--hud-transition);
+        }
+
+        .record-badge.recording {
+            opacity: 1;
+        }
+
+        .record-dot {
+            width: 12px;
+            height: 12px;
+            background-color: var(--hud-primary);
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--hud-primary);
+            animation: pulseRecord 1s infinite alternate;
+        }
+
+        .record-time {
+            color: var(--hud-primary);
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        @keyframes pulseRecord {
+            from {
+                opacity: 1;
+                box-shadow: 0 0 20px var(--hud-primary);
+            }
+
+            to {
+                opacity: 0.3;
+                box-shadow: 0 0 5px var(--hud-primary);
+            }
+        }
+
+        /* Fake Audio Visualizer */
+        .visualizer {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            height: 14px;
+            margin-right: 8px;
+            overflow: hidden;
+            display: none; /* hidden by default */
+        }
+        
+        .record-badge.recording .visualizer {
+            display: flex;
+        }
+
+        .vis-bar {
+            width: 3px;
+            background-color: var(--hud-primary);
+            border-radius: 1px;
+            animation: vis-bounce 0.5s ease-in-out infinite alternate;
+            box-shadow: 0 0 5px var(--hud-primary);
+        }
+
+        .vis-bar:nth-child(1) { animation-duration: 0.3s; animation-delay: 0.0s; }
+        .vis-bar:nth-child(2) { animation-duration: 0.4s; animation-delay: 0.1s; }
+        .vis-bar:nth-child(3) { animation-duration: 0.5s; animation-delay: 0.2s; }
+        .vis-bar:nth-child(4) { animation-duration: 0.4s; animation-delay: 0.3s; }
+        .vis-bar:nth-child(5) { animation-duration: 0.3s; animation-delay: 0.4s; }
+
+        @keyframes vis-bounce {
+            0% { height: 3px; }
+            100% { height: 14px; }
+        }
+
+        /* Center content layout */
+        .hud-center {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            transition: var(--hud-transition);
+        }
+
+        /* Large device name or status */
+        .center-status {
+            color: var(--hud-primary);
+            font-size: 42px;
+            font-weight: 700;
+            text-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+            text-transform: uppercase;
+            transition: var(--hud-transition);
+        }
+
+        /* Sub-info */
+        .center-sub {
+            color: var(--hud-text-mid);
+            font-size: 16px;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+            transition: var(--hud-transition);
+        }
+
+        /* Action Buttons Container */
+        .action-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 12px;
+            transition: var(--hud-transition);
+        }
+
+        /* Focused button state (what D-PAD selects) */
+        .btn-action {
+            background-color: var(--hud-ghost);
+            border: 2px solid var(--hud-dim);
+            color: var(--hud-text-mid);
+            padding: 14px 28px;
+            font-size: 16px;
+            text-transform: uppercase;
+            font-weight: 700;
+            border-radius: 4px;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .btn-action.focused {
+            background-color: var(--hud-dim);
+            border-color: var(--hud-primary);
+            color: var(--bg-color);
+            /* Invert text for contrast */
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
+        }
+
+        /* Simulates D-PAD side selections */
+        .dpad-arrows {
+            position: absolute;
+            color: var(--hud-primary);
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px;
+            text-shadow: 0 0 10px var(--hud-primary);
+            opacity: 0.8;
+            display: flex;
+            width: calc(100% + 48px);
+            left: -24px;
+            justify-content: space-between;
+            pointer-events: none;
+        }
+
+        /* Bottom section */
+        .hud-bottom {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: auto;
+            transition: var(--hud-transition);
+        }
+
+        .divider {
+            width: 100%;
+            height: 2px;
+            background-color: var(--hud-ghost);
+            transition: var(--hud-transition);
+        }
+
+        .hint-text {
+            color: var(--hud-text-mid);
+            font-size: 14px;
+            text-align: center;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+
+        .log-text {
+            color: var(--hud-dim);
+            font-size: 11px;
+            max-width: 100%;
+            line-height: 1.4;
+            height: 16px;
+            /* 1 line for minimal clutter */
+            overflow: hidden;
+            text-align: center;
+        }
+
+        /* 
+           MINIMAL UI MODIFIER (RECORDING STATE)
+           The goal is to hide everything non-essential so the user sees IRL perfectly.
+        */
+        .ar-viewport.recording-mode .hud-top {
+            /* Keep top bar (with red/green recording dot) */
+        }
+
+        .ar-viewport.recording-mode .hud-title {
+            opacity: 0.1;
+            /* Barely visible */
+        }
+
+        .ar-viewport.recording-mode .hud-center {
+            /* Fade out center completely to leave center of vision clear */
+            opacity: 0;
+            transform: scale(0.95);
+        }
+
+        .ar-viewport.recording-mode .hud-bottom .divider,
+        .ar-viewport.recording-mode .hud-bottom .log-text {
+            opacity: 0;
+            height: 0;
+            margin: 0;
+        }
+
+        .ar-viewport.recording-mode .hint-text {
+            opacity: 0.5;
+            /* Just a very dim hint to stop */
+            color: var(--hud-dim);
+        }
+
+        /* Interactive Controls */
+        .sim-controls {
+            position: absolute;
+            top: -50px;
+            color: #fff;
+            display: flex;
+            gap: 12px;
+            font-family: sans-serif;
+            font-size: 12px;
+        }
+
+        .sim-btn {
+            background: #333;
+            border: 1px solid #555;
+            color: #fff;
+            padding: 6px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .sim-btn:hover {
+            background: #555;
+        }
+
+        .sim-btn.active {
+            background: #008800;
+            border-color: #00ff00;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div style="position:relative;">
+        <div class="sim-controls">
+            <span>États D-PAD :</span>
+            <button class="sim-btn active" id="btn-idle" onclick="setState('idle')">Aucune note (Idle)</button>
+            <button class="sim-btn" id="btn-pending" onclick="setState('pending')">Notes en attente</button>
+            <button class="sim-btn" id="btn-recording" onclick="setState('recording')">▶ Enregistrement (Minimal
+                UI)</button>
+        </div>
+
+        <div class="ar-viewport" id="viewport">
+
+            <div class="hud-top">
+                <div class="hud-title">ROKID SCRIBE</div>
+                <div class="record-badge" id="record-badge">
+                    <div class="visualizer">
+                        <div class="vis-bar"></div>
+                        <div class="vis-bar"></div>
+                        <div class="vis-bar"></div>
+                        <div class="vis-bar"></div>
+                        <div class="vis-bar"></div>
+                    </div>
+                    <div class="record-dot"></div>
+                    <div class="record-time" id="record-time">00:00</div>
+                </div>
+            </div>
+
+            <div class="hud-center" id="hud-center">
+                <div class="center-status" id="center-status">NO PENDING RECORDINGS</div>
+                <div class="center-sub" id="center-sub">Ready to capture audio</div>
+
+                <div class="action-container" id="action-container">
+                    <div class="btn-action focused">
+                        <div class="dpad-arrows"><span>►</span><span>◄</span></div>
+                        [ OPEN WI-FI ]
+                    </div>
+                </div>
+            </div>
+
+            <div class="hud-bottom">
+                <div class="divider"></div>
+                <div class="hint-text" id="hint-text">TAP TO RECORD · SWIPE FOR WIFI</div>
+                <div class="log-text" id="log-text">[14:10:02] Wi-Fi Direct interface localized.</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let timerInt;
+        let seconds = 0;
+
+        function updateTime() {
+            seconds++;
+            const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+            const s = (seconds % 60).toString().padStart(2, '0');
+            document.getElementById('record-time').innerText = `${m}:${s}`;
+        }
+
+        function setState(state) {
+            // Update active sim buttons
+            document.querySelectorAll('.sim-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(`btn-${state}`).classList.add('active');
+
+            const viewport = document.getElementById('viewport');
+            const centerStatus = document.getElementById('center-status');
+            const centerSub = document.getElementById('center-sub');
+            const hintText = document.getElementById('hint-text');
+            const logText = document.getElementById('log-text');
+            const recordBadge = document.getElementById('record-badge');
+
+            clearInterval(timerInt);
+            seconds = 0;
+            document.getElementById('record-time').innerText = "00:00";
+
+            if (state === 'idle') {
+                viewport.classList.remove('recording-mode');
+                recordBadge.classList.remove('recording');
+
+                centerStatus.innerText = "NO PENDING RECORDINGS";
+                centerSub.innerText = "";
+
+                hintText.innerText = "TAP TO RECORD · SWIPE FOR WIFI";
+                logText.innerText = "[14:10:02] Listening on Bluetooth SPP...";
+            }
+            else if (state === 'pending') {
+                viewport.classList.remove('recording-mode');
+                recordBadge.classList.remove('recording');
+
+                centerStatus.innerText = "2 NOTES";
+                centerSub.innerText = "Waiting for phone import...";
+
+                hintText.innerText = "TAP TO RECORD · SWIPE FOR WIFI";
+                logText.innerText = "[14:15:21] Notes stored locally.";
+            }
+            else if (state === 'recording') {
+                // MINIMAL UI FOR IRL VISIBILITY
+                viewport.classList.add('recording-mode');
+                recordBadge.classList.add('recording');
+
+                // These are hidden by CSS opacity anyway, but we update text just in case.
+                centerStatus.innerText = "RECORDING";
+                centerSub.innerText = "";
+
+                // The only text remaining visible at the bottom is the Stop hint
+                hintText.innerText = "TAP TO STOP";
+                logText.innerText = "";
+
+                // Start fake timer
+                timerInt = setInterval(updateTime, 1000);
+            }
+        }
+    </script>
+</body>
+
+</html>

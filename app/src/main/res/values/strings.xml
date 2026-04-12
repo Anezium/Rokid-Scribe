@@ -1,0 +1,107 @@
+<resources>
+    <string name="app_name">Rokid Scribe</string>
+
+    <!-- Home screen -->
+    <string name="header_title">ROKID SCRIBE</string>
+    <string name="btn_settings">SETTINGS</string>
+    <string name="btn_import">IMPORT FROM GLASSES</string>
+    <string name="btn_debug_import">DEBUG IMPORT FILES</string>
+    <string name="notes_header">LOCAL NOTES</string>
+    <string name="empty_title">No notes yet</string>
+    <string name="empty_subtitle">Import voice recordings from your Rokid glasses, then transcribe them here.</string>
+    <string name="device_connected">> %1$s CONNECTED (%2$s)</string>
+    <string name="device_none">> NO DEVICE PAIRED</string>
+    <string name="device_switch_hint">  ·  TAP TO SWITCH</string>
+    <string name="device_picker_title">Choose glasses</string>
+    <string name="unknown_device_short">Unknown device</string>
+    <string name="importing_status">Importing\u2026</string>
+    <string name="import_idle">Ready to import</string>
+
+    <!-- Note detail screen -->
+    <string name="btn_back">\u003C BACK</string>
+    <string name="btn_play">PLAY</string>
+    <string name="btn_pause">PAUSE</string>
+    <string name="time_zero">00:00</string>
+    <string name="player_error">Unable to play this audio note.</string>
+    <string name="label_transcript">TRANSCRIPT</string>
+    <string name="no_transcript">No transcript available yet.</string>
+    <string name="no_transcript_language_issue">Auto language detection failed for %1$s.</string>
+    <string name="btn_transcribe">START TRANSCRIBE (API)</string>
+    <string name="btn_retry_language">RETRY W/ LANGUAGE</string>
+    <string name="btn_copy">COPY</string>
+    <string name="btn_export_txt">EXP TXT</string>
+    <string name="btn_export_pdf">EXP PDF</string>
+    <string name="transcript_copied">Transcript copied to clipboard</string>
+    <string name="transcribing">TRANSCRIBING\u2026</string>
+    <string name="language_retry_title">Pick transcript language</string>
+    <string name="transcription_failed_language_retry">Auto language detection failed. Use the language retry button on this note.</string>
+    <string name="note_meta">%1$s \u00B7 %2$s</string>
+    <string name="btn_rename_note">RENAME</string>
+    <string name="btn_delete_note">DEL</string>
+    <string name="rename_note_title">Rename note</string>
+    <string name="rename_note_message">Give this recording a custom title. Leave it empty to fall back to the original file name.</string>
+    <string name="rename_note_hint">Morning standup</string>
+    <string name="rename_note_saved">Note title updated</string>
+    <string name="rename_note_reset">Custom title removed</string>
+    <string name="rename_note_failed">Unable to rename this note.</string>
+    <string name="delete_confirm_title">Delete this note?</string>
+    <string name="delete_confirm_message">The audio file and transcript will be permanently removed.</string>
+    <string name="delete_confirm_yes">Delete</string>
+    <string name="delete_confirm_no">Cancel</string>
+    <string name="note_deleted">Note deleted</string>
+
+    <!-- Settings screen -->
+    <string name="settings_title">SETTINGS</string>
+    <string name="label_transcription_provider">TRANSCRIPTION PROVIDER</string>
+    <string name="provider_hint_text">> Choose which API should transcribe newly imported notes.</string>
+    <string name="provider_name_elevenlabs">ELEVENLABS</string>
+    <string name="provider_name_assemblyai">ASSEMBLYAI</string>
+    <string name="provider_name_speechmatics">SPEECHMATICS</string>
+    <string name="provider_name_deepgram">DEEPGRAM</string>
+    <string name="provider_name_groq">GROQ</string>
+    <string name="label_provider_api_key">API KEY</string>
+    <string name="hint_api_key_elevenlabs">sk_xxxxxxxxxx</string>
+    <string name="hint_api_key_assemblyai">your-assemblyai-key</string>
+    <string name="hint_api_key_speechmatics">your-speechmatics-key</string>
+    <string name="hint_api_key_deepgram">your-deepgram-key</string>
+    <string name="hint_api_key_groq">gsk_xxxxxxxxxx</string>
+    <string name="api_key_hint_elevenlabs">> Used directly for local transcription with ElevenLabs. Stored encrypted on the phone.</string>
+    <string name="api_key_hint_assemblyai">> Used directly for local transcription with AssemblyAI. Stored encrypted on the phone.</string>
+    <string name="api_key_hint_speechmatics">> Used directly for local transcription with Speechmatics. Stored encrypted on the phone.</string>
+    <string name="api_key_hint_deepgram">> Used directly for local transcription with Deepgram. Usage card shows project balance and month-to-date spend when available.</string>
+    <string name="api_key_hint_groq">> Used directly for local transcription with Groq. Groq docs list flac/mp3/mp4/m4a/ogg/wav/webm, so raw .aac notes may need conversion first.</string>
+    <string name="label_transport">TRANSPORT PRIORITY</string>
+    <string name="transport_hint_text_wifi">> LAN requires glasses companion app. Will use BT as fallback.</string>
+    <string name="transport_hint_text_spp">> Direct Bluetooth transfer. Slower but always available.</string>
+    <string name="label_quota">PROVIDER USAGE</string>
+    <string name="label_deepgram_project_id">DEEPGRAM PROJECT ID</string>
+    <string name="btn_refresh">REFRESH</string>
+    <string name="hint_deepgram_project_id">proj_xxxxxxxxxxxxxxxx</string>
+    <string name="quota_loading">> Fetching provider usage\u2026</string>
+    <string name="quota_missing_api_key">> Add an API key for the selected provider to load usage details.</string>
+    <string name="quota_status_ready">> Live usage from the selected provider when available.</string>
+    <string name="quota_reset_unknown">Unknown</string>
+    <string name="quota_status_overage">> Overage is enabled after the plan limit.</string>
+    <string name="quota_status_hard_cap">> Hard cap at the current plan limit.</string>
+    <string name="quota_limit_unavailable">Unavailable</string>
+    <string name="quota_remaining_unavailable">Unavailable</string>
+    <string name="quota_status_unavailable">> This provider does not expose a simple quota endpoint in the app yet.</string>
+    <string name="deepgram_project_id_hint">> Deepgram usage endpoints are project-scoped. Leave this blank to auto-resolve from your key, or paste a specific project id to query another project.</string>
+
+    <!-- Transport modes -->
+    <string name="transport_mode_spp_slow">BLUETOOTH SPP</string>
+    <string name="transport_mode_wifi_lan">WIFI LAN / FAST</string>
+
+    <!-- Shared -->
+    <string name="ready">READY</string>
+    <string name="busy">BUSY</string>
+    <string name="permission_needed">Grant the required Bluetooth permission to continue.</string>
+    <string name="select_device">No Rokid device found. Pair your glasses in Bluetooth settings.</string>
+    <string name="missing_api_key">Add the API key for the selected transcription provider in Settings first.</string>
+    <string name="transcript_missing">This note has no transcript yet.</string>
+    <string name="enable_bluetooth">Enable Bluetooth to continue.</string>
+    <string name="bluetooth_pair_prompt">Pair the phone and glasses in Android Bluetooth settings first.</string>
+    <string name="bluetooth_connect_timeout">Connection timed out. Re-open the glasses app and retry.</string>
+    <string name="version_label">v1.2.0</string>
+    <string name="debug_import_picker_title">Select local audio files</string>
+</resources>

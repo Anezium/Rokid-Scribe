@@ -1,0 +1,7 @@
+# Copy only the values you still need into local.properties.
+# These values are optional local build-time overrides only.
+# They are not required for the main Rokid-Scribe phone + glasses companion flow.
+
+sdk.dir=C\:\\Path\\To\\Android\\Sdk
+rokid.clientSecret=replace-with-your-rokid-client-secret
+rokid.authBlobName=replace-with-your-auth-blob-name-without-extension
