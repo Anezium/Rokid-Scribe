@@ -126,6 +126,26 @@ Notes:
 - Some providers expose usage or spend endpoints directly in-app, others do not.
 - `Groq` can transcribe but does not currently expose the same kind of billing / quota data in the app.
 
+### Current free-tier snapshot
+
+Checked on `2026-04-13`. These offers can change, so treat this as a quick comparison and re-check the official pricing pages before relying on it in production.
+
+| Provider | Free / trial offer | Useful note |
+| --- | --- | --- |
+| `ElevenLabs` | Free plan with `10k credits / month`, and Speech to Text is included in that plan. | Credit usage is shared across products, so the exact transcription time depends on their current credit accounting. |
+| `AssemblyAI` | Free offer with `$50` in credits, which their pricing page currently presents as up to about `333h` of transcription. | Good starter tier for batch testing; paid usage starts around `$0.15 / hr` depending on model/features. |
+| `Speechmatics` | Free tier with `480 minutes / month` for Speech to Text. | Nice for recurring testing because the allowance is expressed directly in minutes. |
+| `Deepgram` | Free signup with `$200` in credit, no card required, with access to public models. | Strongest pure trial budget of the bunch if you want to benchmark several runs quickly. |
+| `Groq` | Free plan exists, but it is mainly governed by rate limits rather than a simple monthly credit bucket. | For STT, the official docs currently list `25 MB` max upload on free tier and per-model audio/request limits on the account. |
+
+Official references:
+
+- `ElevenLabs`: [Pricing](https://elevenlabs.io/pricing) and [Billing docs](https://elevenlabs.io/docs/overview/administration/billing)
+- `AssemblyAI`: [Pricing](https://www.assemblyai.com/pricing/) and [Models / pricing docs](https://www.assemblyai.com/docs/getting-started/models)
+- `Speechmatics`: [Pricing](https://www.speechmatics.com/pricing)
+- `Deepgram`: [Pricing](https://deepgram.com/pricing) and [Getting started](https://developers.deepgram.com/guides/fundamentals/make-your-first-api-request)
+- `Groq`: [Pricing](https://groq.com/pricing), [Speech-to-Text docs](https://console.groq.com/docs/speech-to-text), and [Rate limits](https://console.groq.com/docs/rate-limits)
+
 ---
 
 ## Project structure
