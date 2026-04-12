@@ -16,14 +16,12 @@
   <img src="Screenshot_Rokid_Scribe_Menu.jpg" alt="Phone app - Rokid Scribe home" width="280" />
   &nbsp;&nbsp;&nbsp;&nbsp;
   <img src="Screenshot_Rokid_Scribe_Settings.jpg" alt="Phone app - Rokid Scribe settings" width="280" />
+  <img src="Screenshot_Rokid_Scribe_Record.jpg" alt="Phone app - Rokid Scribe note detail" width="280" />
 </p>
 <p align="center">
   <img src="Screenshot_Rokid_Scribe_Glasses.jpg" alt="Glasses app - Rokid Scribe idle HUD" width="280" />
   &nbsp;&nbsp;&nbsp;&nbsp;
   <img src="Screenshot_Rokid_Scribe_Glasses_recording.jpg" alt="Glasses app - Rokid Scribe recording HUD" width="280" />
-</p>
-<p align="center">
-  <img src="Screenshot_Rokid_Scribe_Record.jpg" alt="Phone app - Rokid Scribe note detail" width="280" />
 </p>
 <p align="center">
   <em>Phone companion app · Settings and provider usage · Glasses idle HUD · Glasses recording HUD</em>
