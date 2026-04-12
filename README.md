@@ -30,8 +30,6 @@
 
 ## What it does
 
-`Rokid-Scribe` is built around one simple rule:
-
 The phone initiates sync. The glasses stay as passive as possible.
 
 The current product flow is:
@@ -42,8 +40,6 @@ The current product flow is:
 4. Keep the raw audio and metadata on the phone.
 5. Transcribe locally on the phone with the provider you choose.
 6. Review, rename, copy, or export the transcript.
-
-No desktop helper. No cloud relay between the phone and the glasses. The only network dependency is the transcription provider you choose on the phone.
 
 ---
 
