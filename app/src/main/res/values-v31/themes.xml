@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.RokidScribe" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@color/phosphor_bg</item>
+        <item name="android:statusBarColor">@color/phosphor_bg</item>
+        <item name="android:navigationBarColor">@color/phosphor_bg</item>
+        <item name="android:windowSplashScreenBackground">@color/phosphor_bg</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_splash_logo</item>
+    </style>
+</resources>

@@ -28,8 +28,8 @@ android {
         applicationId = "com.rokidscribe"
         minSdk = 28
         targetSdk = 36
-        versionCode = 104
-        versionName = "1.1.1"
+        versionCode = 105
+        versionName = "1.1.2"
 
         buildConfigField(
             "String",
